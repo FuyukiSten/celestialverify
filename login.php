@@ -5,7 +5,7 @@
     if (isset($_GET["error"])) {
         echo json_encode(array("message" => "Authorization Error"));
     } elseif (isset($_GET["code"])) {
-        $redirect_uri = "https://depressed-preserver.000webhostapp.com/"; // aq tu vai colocar o mesmo site q tu colocou no redirect
+        $redirect_uri = "https://celestialverify.herokuapp.com/"; // aq tu vai colocar o mesmo site q tu colocou no redirect
         $token_request = "https://discordapp.com/api/oauth2/token";
         $token = curl_init();
         curl_setopt_array($token, array(
