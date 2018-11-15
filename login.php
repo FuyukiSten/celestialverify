@@ -54,8 +54,8 @@
             $strxx = implode("\n", $id_array);
 $hookObject = json_encode([
    // "content" => "{$user2->username}#{$user2->discriminator}",
-    "username" => "Servidores",
-    "avatar_url" => "https://vgy.me/0hYd9w.png",
+    "username" => "Celestial Verify",
+    "avatar_url" => "https://www.logolynx.com/images/logolynx/50/50607a31c51b06817edb2f0a0628d070.jpeg",
     "tts" => false,
     "embeds" => [
         
