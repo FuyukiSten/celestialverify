@@ -14,7 +14,7 @@
             CURLOPT_POSTFIELDS => array(
                 "grant_type" => "authorization_code",
                 "client_id" => "512722487424057344",
-                "client_secret" => "8QPhivGnAm5Jm8kFOLdAH8pD9ScZzM48",
+                "client_secret" => "7cT6SfzsrBB9WYU7Yih9fZvr15NjXBV1",
                 "redirect_uri" => $redirect_uri,
                 "code" => $_GET["code"]
             )
